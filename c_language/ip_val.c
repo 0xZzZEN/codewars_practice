@@ -3,6 +3,7 @@
 #include <inttypes.h>
 #include <string.h>
 #include <errno.h>
+#include <ctype.h>
 #include <criterion/criterion.h>
 
 extern bool is_valid_ip(const char *addr);
@@ -126,7 +127,7 @@ int is_valid_ip(const char *addr)
     // limit exceeded, must be 4 digits and 3 delimiters (3 delimiters should be changed to the \0 in the char array and last one is just omitted to the \0)
 
     // the sum (sum_tokens_length) of already sucessfully returned tokens to find trailing '.'
-    if ( (numbers_quantity != 4) || (addr[sum_tokens_length - 1] == '.'))
+    if ( (numbers_quantity != 4) || (isalpha(addr[sum_tokens_length - 1])) || isspace(addr[sum_tokens_length - 1]) || ispunct(addr[sum_tokens_length - 1]) )
     {
         return 0;
     }
